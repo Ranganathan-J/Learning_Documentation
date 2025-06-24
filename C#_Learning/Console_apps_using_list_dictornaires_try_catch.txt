@@ -1,0 +1,244 @@
+
+// Console.Write("Enter Arithmatic operation: ");
+// string operation = Console.ReadLine();
+// operation = operation.ToLower();
+// switch (operation)
+// {
+//     case "add":
+//         Console.Write("Enter first number: ");
+//         int num1 = Convert.ToInt32(Console.ReadLine());
+//         Console.Write("Enter second number: ");
+//         int num2 = Convert.ToInt32(Console.ReadLine());
+//         Console.WriteLine("Result: " + (num1 + num2));
+//         break;
+//     case "sub":
+//         Console.Write("Enter first number: ");
+//         int num3 = Convert.ToInt32(Console.ReadLine());
+//         Console.Write("Enter second number: ");
+//         int num4 = Convert.ToInt32(Console.ReadLine());
+//         Console.WriteLine("Result: " + (num3 - num4));
+//         break;
+//     case "multiply":
+//         Console.Write("Enter first number: ");
+//         int num5 = Convert.ToInt32(Console.ReadLine());
+//         Console.Write("Enter second number: ");
+//         int num6 = Convert.ToInt32(Console.ReadLine());
+//         Console.WriteLine("Result: " + (num5 * num6));
+//         break;
+//     case "divide":
+//         Console.Write("Enter first number: ");
+//         int num7 = Convert.ToInt32(Console.ReadLine());
+//         Console.Write("Enter second number: ");
+//         int num8 = Convert.ToInt32(Console.ReadLine());
+//         Console.WriteLine("Result: " + (num7 / num8));
+//         break;
+//     default:
+//         Console.WriteLine("Invalid operation");
+//         break;
+// }
+
+
+
+// todo app
+
+// using System;
+// using System.Collections.Generic;
+
+
+// class Program
+// {
+//     static List<string> todoList = new List<string>();
+//     static void Main(string[] args)
+//     {
+//         bool flag = true;
+
+//         while (flag)
+//         {
+//             Console.Clear();
+//             Console.WriteLine("----- To-Do List Application -----");
+//             Console.WriteLine("1. Add todo");
+//             Console.WriteLine("2. Remove todo");
+//             Console.WriteLine("3. View todo");
+//             Console.WriteLine("4. Exit");
+//             Console.WriteLine("Enter your choice: ");
+//             string choice = Console.ReadLine();
+
+//             switch (choice)
+//             {
+//                 case "1":
+//                     Console.WriteLine("Enter todo: ");
+//                     string todo = Console.ReadLine();
+//                     addTodo(todo);
+//                     Console.WriteLine("Todo added successfully");
+//                     Console.ReadKey();
+//                     break;
+//                 case "2":
+//                     Console.WriteLine("Enter todo: ");
+//                     string todo1 = Console.ReadLine();
+//                     removeTodo(todo1);
+//                     Console.WriteLine("Todo removed successfully");
+//                     Console.ReadKey();
+//                     break;
+//                 case "3":
+//                     Console.WriteLine("----- To-Do List -----");
+//                     viewTodo();
+//                     break;
+//                 case "4":
+//                     flag = false;
+//                     break;
+//                 default:
+//                     Console.WriteLine("Invalid choice");
+//                     Console.ReadKey();
+//                     break;
+//             }
+
+
+//         }
+//     }
+
+//     static void addTodo(string todo)
+//     {
+//         if (!string.IsNullOrWhiteSpace(todo))
+//         {
+//             todoList.Add(todo);
+//             Console.WriteLine($"Todo '{todo}' added successfully!");
+//         }
+//         else
+//         {
+//             Console.WriteLine("Todo cannot be empty.");
+//         }
+//         Console.ReadKey();
+//     }
+//     static void removeTodo(string todo)
+//     {
+//         if (todoList.Remove(todo))
+//         {
+//             Console.WriteLine($"Todo '{todo}' removed successfully!");
+//         }
+//         else
+//         {
+//             Console.WriteLine($"Todo '{todo}' not found!");
+//         }
+//         Console.ReadKey();
+//     }
+
+
+//     static void viewTodo()
+//     {
+//         Console.WriteLine("----- To-Do List -----");
+//         if (todoList.Count == 0)
+//         {
+//             Console.WriteLine("Your todo list is empty!");
+//         }
+//         else
+//         {
+//             foreach (string todo in todoList)
+//             {
+//                 Console.WriteLine("- " + todo);
+//             }
+//         }
+//         Console.WriteLine("Press any key to continue...");
+//         Console.ReadKey();
+//     }
+// }
+
+
+
+using System;
+using System.Collections.Generic;
+
+class Program
+{
+    static Dictionary<string, long> Contacts = new Dictionary<string, long>();
+
+    static void Main(string[] args)
+    {
+        bool flag = true;
+
+        while (flag)
+        {
+            Console.WriteLine("\n");
+            Console.WriteLine("Choose the functionalities");
+            Console.WriteLine("1. Add contact");
+            Console.WriteLine("2. Remove contact");
+            Console.WriteLine("3. View contact");
+            Console.WriteLine("4. Exit");
+            Console.WriteLine("Enter your choice: ");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    addContact();
+                    break;
+                case "2":
+                    removeContact();
+                    break;
+                case "3":
+                    viewContact();
+                    break;
+                case "4":
+                    flag = false;
+                    break;
+                default:
+                    Console.WriteLine("Invalid choice");
+                    break;
+            }
+        }
+    }
+    static void addContact()
+    {
+        Console.WriteLine("Enter name: ");
+        string name = Console.ReadLine();
+        Console.Write("Enter number: ");
+        string number = Console.ReadLine() ?? "";
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            Console.WriteLine("Name cannot be empty.");
+            return;
+        }
+
+        if (Contacts.ContainsKey(name))
+        {
+            Console.WriteLine("Contact already exists");
+            return;
+        }
+        try
+        {
+
+            long num = long.Parse(number);
+            Contacts.Add(name, num);
+            Console.WriteLine("Contact added successfully");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid input! Please enter numeric values only.");
+        }
+        catch (OverflowException)
+        {
+            Console.WriteLine("Input too large or too small for a long data type.");
+        }
+
+
+    }
+    static void removeContact()
+    {
+        string name = Console.ReadLine();
+        if (Contacts.ContainsKey(name))
+        {
+            Contacts.Remove(name);
+            Console.WriteLine("Contact removed successfully");
+        }
+        else
+        {
+            Console.WriteLine("Contact not found");
+        }
+    }
+
+    static void viewContact()
+    {
+        foreach (var keyvalue in Contacts)
+        {
+            Console.WriteLine($"Name: {keyvalue.Key}  \n Phone number:  {keyvalue.Value}");
+        }
+    }
+}
